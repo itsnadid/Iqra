@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey Iqra! ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 2px 8px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 2;
+            animation: containerEntrance 1s ease-out;
+        }
+
+        @keyframes containerEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 32px;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.05);
+            animation: imageFloat 3s ease-in-out infinite, imageEntrance 1.2s ease-out 0.3s both;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes imageEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes imageFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 300% 300%;
+            animation: gradientRotate 6s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        @keyframes gradientRotate {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .main-message {
+            font-size: 32px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            animation: textEntrance 1s ease-out 0.6s both;
+            letter-spacing: -0.5px;
+        }
+
+        @keyframes textEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .trigger-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            animation: buttonEntrance 1s ease-out 0.9s both;
+            font-family: inherit;
+        }
+
+        @keyframes buttonEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .trigger-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+        }
+
+        .trigger-button:active {
+            transform: translateY(0);
+        }
+
+        .message-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .message-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 32px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .message-popup.show .popup-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .popup-emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: emojiSpin 2s ease-in-out infinite, emojiGlow 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes emojiSpin {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        @keyframes emojiGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+                filter: brightness(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+                filter: brightness(1.2);
+            }
+        }
+
+        .popup-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .popup-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .close-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .close-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 182, 193, 0.6);
+            animation: floatUp 8s ease-in-out infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-10vh) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20vh) scale(0);
+            }
+        }
+
+        .auto-message-hint {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: fadeInOut 4s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 40px 24px;
+            }
+            
+            .profile-image {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .main-message {
+                font-size: 26px;
+            }
+
+            .popup-content {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div class="profile-wrapper">
+            <img src="iqra.jpg" alt="Friend Picture" class="profile-image">
+        </div>
+        
+        <div class="main-message">
+            Hey Iqra is this You 👀
+        </div>
+        
+        <button class="trigger-button" onclick="showMessage()">
+            ✨ Click for Surprise
+        </button>
+        
+        <div class="auto-message-hint">
+            Or wait 4 seconds...
+        </div>
+    </div>
+
+    <div class="message-popup" id="messagePopup">
+        <div class="popup-content">
+            <div class="popup-emoji">💖</div>
+            <div class="popup-title">You look absolutely stunning!</div>
+            <div class="popup-message">Hope your day is as beautiful as your smile! 🌸</div>
+            <button class="close-button" onclick="closeMessage()">Thank you! 😊</button>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartEmojis = ['💖', '💕', '💗', '💙', '💜', '🤍', '❤️'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 10000);
+            }, 3000);
+        }
+
+        // Show message popup
+        function showMessage() {
+            const popup = document.getElementById('messagePopup');
+            popup.classList.add('show');
+        }
+
+        // Close message popup
+        function closeMessage() {
+            const popup = document.getElementById('messagePopup');
+            popup.classList.remove('show');
+        }
+
+        // Auto-trigger message after 4 seconds
+        setTimeout(() => {
+            showMessage();
+        }, 4000);
+
+        // Initialize floating hearts
+        createHearts();
+
+        // Close popup when clicking outside
+        document.getElementById('messagePopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMessage();
+            }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMessage();
+            }
+        });
+    </script>
+</body>
+</html>
